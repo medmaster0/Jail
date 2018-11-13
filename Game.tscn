@@ -34,10 +34,6 @@ format = 1
 tile_data = PoolIntArray(  )
 _sections_unfolded = [ "Cell" ]
 
-[node name="Creature" parent="FloorMapPrim" index="0" instance=ExtResource( 3 )]
-
-position = Vector2( 447, 206 )
-
 [node name="Law" parent="." index="1" instance=ExtResource( 5 )]
 
 position = Vector2( 432, 208 )
@@ -95,6 +91,10 @@ occluder_light_mask = 1
 format = 1
 tile_data = PoolIntArray(  )
 _sections_unfolded = [ "Cell" ]
+
+[node name="Creature" parent="WallMapPrim" index="0" instance=ExtResource( 3 )]
+
+position = Vector2( 447, 206 )
 
 [node name="WallMapSeco" type="TileMap" parent="." index="5"]
 

@@ -14,6 +14,7 @@ var zodiac_sign = randi()%12
 var zodiac_tile
 #var zodiac_background #children, not vars
 var creature_name = ""
+var is_main = false
 
 func _ready():
 	# Called when the node is added to the scene for the first time.
@@ -26,14 +27,14 @@ func _ready():
 	#Enable user input
 	set_process_input( true )
 
-#	#zodiac tile
-#	zodiac_tile = ZodiacTile.instance()
-#	zodiac_tile.position.x = zodiac_tile.position.x - map.cell_size.x
-#	zodiac_tile.get_child(zodiac_sign).visible = true
-#	add_child(zodiac_tile)
-#	#zodiac_tile.visible = false
-#	#set zodiac contrast color
-#	zodiac_tile.modulate = MedAlgo.contrastColor(map.self_modulate)
+	#zodiac tile
+	zodiac_tile = ZodiacTile.instance()
+	zodiac_tile.position.x = zodiac_tile.position.x - map.cell_size.x
+	zodiac_tile.get_child(zodiac_sign).visible = true
+	add_child(zodiac_tile)
+	#zodiac_tile.visible = false
+	#set zodiac contrast color
+	#zodiac_tile.modulate = MedAlgo.contrastColor(map.self_modulate)
 #
 #	#zodiacl background (set colors)
 #	$ZodiacBackground.modulate = map.self_modulate
@@ -74,6 +75,9 @@ func step(dir):
 		pass
 
 func _input( event ):
+	
+	if(is_main == false):
+		return
 	
 	# Input
     # Step Actions

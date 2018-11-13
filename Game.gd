@@ -22,10 +22,14 @@ func _ready():
 	$CanvasLayer/Background.scale = get_viewport().size
 	$CanvasLayer/Background.set_modulate( background_color )
 	
+	#Color Backgrounds
 	$FloorMapPrim.self_modulate = Color(randf(), randf(), randf())
 	$FloorMapSeco.self_modulate = Color(randf(), randf(), randf())
 	$WallMapPrim.self_modulate = Color(randf(), randf(), randf())
 	$WallMapSeco.self_modulate = Color(randf(), randf(), randf())
+	
+	#Setup Main Player
+	$WallMapPrim/Creature.is_main = true
 	
 	$Law.print_law()
 	
@@ -37,11 +41,12 @@ func _ready():
 	var jail_cell #temp var for each jail cell
 	var jail_x = 8 #The top left corner of the jail house
 	var jail_y = 8 #The top left corner of the jail house
+	var num_cols = 4 ##columns of cell x dir
+	var num_rows = 6 #Rows of cells y dir
 	
+	for i in range(num_cols): #columns of cell x dir
 	
-	for i in range(4): #columns of cell x dir
-	
-		for j in range(6): #Rows of cells y dir
+		for j in range(num_rows): #Rows of cells y dir
 			jail_cell = JailCell.instance()
 			jail_cell.position = $FloorMapPrim.map_to_world(Vector2(jail_x+4*i,jail_y+4*j ))
 			add_child(jail_cell)
@@ -53,6 +58,8 @@ func _ready():
 				prisoner.position = $FloorMapPrim.map_to_world(Vector2(jail_x+4*i+randi()%2,jail_y+4*j+1 ))
 				$WallMapPrim.add_child(prisoner)
 				map_prisoners.append(prisoner)
+				prisoner.zodiac_tile.get_child(prisoner.zodiac_sign).visible = false
+				
 		
 			#Draw the floor
 			for z in range(4):
@@ -74,6 +81,16 @@ func _ready():
 			if i == 0:
 				$WallMapPrim.set_cell(jail_x+4*i-1, jail_y+4*j+2, 2 )
 				$WallMapSeco.set_cell(jail_x+4*i-1, jail_y+4*j+2, 3 )
+				
+			#Also Blocks on last column
+			if i == num_cols-1:
+				#BRICKS Directly Above path
+				$WallMapPrim.set_cell(jail_x+4*i+3, jail_y+4*j+1, 2)
+				$WallMapSeco.set_cell(jail_x+4*i+3, jail_y+4*j+1, 3)
+				
+				#BRICKS two Above path
+				$WallMapPrim.set_cell(jail_x+4*i+3, jail_y+4*j, 2)
+				$WallMapSeco.set_cell(jail_x+4*i+3, jail_y+4*j, 3)
 		
 
 	print(map_jail_cells.size())
@@ -82,7 +99,7 @@ func _ready():
 	pass
 
 var total_delta = 0
-var tick_period = 1 #the seconds that a tick oocurs
+var tick_period = 0.5 #the seconds that a tick oocurs
 func _process(delta):
 	# Called every frame. Delta is time since last frame.
 	# Update game logic here.
