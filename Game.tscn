@@ -36,7 +36,7 @@ _sections_unfolded = [ "Cell" ]
 
 [node name="Law" parent="." index="1" instance=ExtResource( 5 )]
 
-position = Vector2( 432, 208 )
+position = Vector2( 672, 208 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="2"]
 
@@ -89,12 +89,12 @@ collision_layer = 1
 collision_mask = 1
 occluder_light_mask = 1
 format = 1
-tile_data = PoolIntArray(  )
-_sections_unfolded = [ "Cell" ]
+tile_data = PoolIntArray( 917543, 7, 0, 917547, 7, 0, 983079, 7, 0, 983083, 7, 0, 1048615, 7, 0, 1048619, 7, 0, 1114151, 7, 0, 1114155, 7, 0, 1179687, 7, 0, 1179691, 7, 0, 1245223, 7, 0, 1245227, 7, 0, 1310759, 7, 0, 1310763, 7, 0, 1376295, 7, 0, 1376299, 7, 0 )
+_sections_unfolded = [ "Cell", "Visibility" ]
 
 [node name="Creature" parent="WallMapPrim" index="0" instance=ExtResource( 3 )]
 
-position = Vector2( 447, 206 )
+position = Vector2( 656, 208 )
 
 [node name="WallMapSeco" type="TileMap" parent="." index="5"]
 
@@ -114,7 +114,7 @@ collision_layer = 1
 collision_mask = 1
 occluder_light_mask = 1
 format = 1
-tile_data = PoolIntArray(  )
+tile_data = PoolIntArray( 917543, 8, 0, 917547, 8, 0, 983079, 8, 0, 983083, 8, 0, 1048615, 8, 0, 1048619, 8, 0, 1114151, 8, 0, 1114155, 8, 0, 1179687, 8, 0, 1179691, 8, 0, 1245223, 8, 0, 1245227, 8, 0, 1310759, 8, 0, 1310763, 8, 0, 1376295, 8, 0, 1376299, 8, 0 )
 _sections_unfolded = [ "Cell" ]
 
 

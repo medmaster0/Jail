@@ -8,9 +8,14 @@ export (PackedScene) var JailCell
 export (PackedScene) var Creature
 
 var background_color
+var background_tick = 2 #How often the background changes color (slightly)
+var background_timer = 0 #keeps track of how long it's been since background last changed
 
 var map_jail_cells = [] #Array to hold all of the created jail cells
 var map_prisoners = [] #Array to hold all of the created creatures
+var cell_occupancies = [] #Array keeping track of which jail_cells have prisoners in them...
+
+var map_laws = [] #a list of all the laws that govern the land...
 
 func _ready():
 	# Called when the node is added to the scene for the first time.
@@ -32,6 +37,7 @@ func _ready():
 	$WallMapPrim/Creature.is_main = true
 	
 	$Law.print_law()
+	#Generate a bunch of laws...
 	
 	#Create Jail Cells
 #	var jail_cell = JailCell.instance()
@@ -59,7 +65,9 @@ func _ready():
 				$WallMapPrim.add_child(prisoner)
 				map_prisoners.append(prisoner)
 				prisoner.zodiac_tile.get_child(prisoner.zodiac_sign).visible = false
-				
+				cell_occupancies.append(true)
+			else:
+				cell_occupancies.append(false)
 		
 			#Draw the floor
 			for z in range(4):
@@ -91,22 +99,19 @@ func _ready():
 				#BRICKS two Above path
 				$WallMapPrim.set_cell(jail_x+4*i+3, jail_y+4*j, 2)
 				$WallMapSeco.set_cell(jail_x+4*i+3, jail_y+4*j, 3)
-		
 
-	print(map_jail_cells.size())
-	print(map_prisoners.size())
 
-	pass
+#End READY
 
 var total_delta = 0
 var tick_period = 0.5 #the seconds that a tick oocurs
 func _process(delta):
+	
 	# Called every frame. Delta is time since last frame.
 	# Update game logic here.
 	total_delta = total_delta + delta
 	
 	if total_delta > tick_period:
-		print("tick")
 		
 		#Choose a random prisoner
 		var rand_prisoner = map_prisoners[randi()%map_prisoners.size()]
@@ -115,9 +120,66 @@ func _process(delta):
 			rand_prisoner.step(Vector2(1,0))
 		else:
 			rand_prisoner.step(Vector2(-1,0))
-		print(rand_prisoner.position)
 		rand_prisoner.update()
 		
 		total_delta = total_delta - tick_period
+		
+	#Also do background stuff
+	background_timer = background_timer + delta
+	if background_timer > background_tick:
+		changeBackground()
+		background_timer = background_timer - background_tick
 	
 	pass
+	
+#Changes the background ever so slightly
+#(within bounds)
+func changeBackground():
+	
+	#change RED
+	var r_change = 0
+	if randi()%2 == 0:
+		r_change = 0.025
+	else:
+		r_change = -0.025
+	#Adjust the background color
+	background_color.r = background_color.r + r_change
+	#bounds check (or else it can run away for ever pretty much)
+	if background_color.r > 1:
+		background_color.r = 1
+	if background_color.r < 0:
+		background_color.r = 0
+		
+	#change GREEN
+	var g_change = 0
+	if randi()%2 == 0:
+		g_change = 0.025
+	else:
+		g_change = -0.025
+	#Adjust the background color
+	background_color.g = background_color.g + g_change
+	#bounds check (or else it can run away for ever pretty much)
+	if background_color.g > 1:
+		background_color.g = 1
+	if background_color.g < 0:
+		background_color.g = 0
+		
+	#change BLUE
+	var b_change = 0
+	if randi()%2 == 0:
+		b_change = 0.025
+	else:
+		b_change = -0.025
+	#Adjust the background color
+	background_color.b = background_color.b + b_change
+	#bounds check (or else it can run away for ever pretty much)
+	if background_color.b > 1:
+		background_color.b = 1
+	if background_color.b < 0:
+		background_color.b = 0
+	
+	$CanvasLayer/Background.modulate = background_color
+	
+	
+	
+	print(background_color)
