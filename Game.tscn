@@ -3,8 +3,8 @@
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://things/JailCell.tscn" type="PackedScene" id=2]
 [ext_resource path="res://things/Creature.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Tileset.tres" type="TileSet" id=4]
-[ext_resource path="res://Law.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Law.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Tileset.tres" type="TileSet" id=5]
 [ext_resource path="res://tiles/blank.png" type="Texture" id=6]
 
 [node name="Game" type="Node" index="0"]
@@ -12,11 +12,12 @@
 script = ExtResource( 1 )
 JailCell = ExtResource( 2 )
 Creature = ExtResource( 3 )
+Law = ExtResource( 4 )
 
 [node name="FloorMapPrim" type="TileMap" parent="." index="0"]
 
 mode = 0
-tile_set = ExtResource( 4 )
+tile_set = ExtResource( 5 )
 cell_size = Vector2( 16, 16 )
 cell_quadrant_size = 16
 cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
@@ -34,7 +35,7 @@ format = 1
 tile_data = PoolIntArray(  )
 _sections_unfolded = [ "Cell" ]
 
-[node name="Law" parent="." index="1" instance=ExtResource( 5 )]
+[node name="Law" parent="." index="1" instance=ExtResource( 4 )]
 
 position = Vector2( 672, 208 )
 
@@ -53,7 +54,7 @@ texture = ExtResource( 6 )
 [node name="FloorMapSeco" type="TileMap" parent="." index="3"]
 
 mode = 0
-tile_set = ExtResource( 4 )
+tile_set = ExtResource( 5 )
 cell_size = Vector2( 16, 16 )
 cell_quadrant_size = 16
 cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
@@ -74,7 +75,7 @@ _sections_unfolded = [ "Cell" ]
 [node name="WallMapPrim" type="TileMap" parent="." index="4"]
 
 mode = 0
-tile_set = ExtResource( 4 )
+tile_set = ExtResource( 5 )
 cell_size = Vector2( 16, 16 )
 cell_quadrant_size = 16
 cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
@@ -99,7 +100,7 @@ position = Vector2( 656, 208 )
 [node name="WallMapSeco" type="TileMap" parent="." index="5"]
 
 mode = 0
-tile_set = ExtResource( 4 )
+tile_set = ExtResource( 5 )
 cell_size = Vector2( 16, 16 )
 cell_quadrant_size = 16
 cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )

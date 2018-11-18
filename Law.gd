@@ -29,6 +29,8 @@ func _ready():
 	section = randi()%100 + 1
 	article = randi()%20
 	text = Laws.gen_latin_sentence()
+	law_type = randi()%3
+	law_parameters = randi()%8+1
 	
 	$Sprite.modulate = Color(randf(), randf(), randf())
 	$Sprite2.modulate = Color(randf(), randf(), randf())
@@ -44,4 +46,15 @@ func _ready():
 func print_law():
 	print("Code " + code + " Section " + str(section) + "." + str(article) )
 	print(text)
-	
+	#Print out the punishment type
+	match law_type:
+		0:
+			print("The Punishment is a fine of:")
+			print(str(law_parameters) + " Coins" )
+		1:
+			print("The Punishment is jail for:")
+			print(str(law_parameters) + " Days" )
+		2:
+			print("The Punishment is death in:")
+			print(str(law_parameters) + " Days" )
+			

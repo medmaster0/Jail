@@ -6,6 +6,7 @@ extends Node
 
 export (PackedScene) var JailCell
 export (PackedScene) var Creature
+export (PackedScene) var Law
 
 var background_color
 var background_tick = 2 #How often the background changes color (slightly)
@@ -35,9 +36,19 @@ func _ready():
 	
 	#Setup Main Player
 	$WallMapPrim/Creature.is_main = true
+	$WallMapPrim/Creature.zodiac_tile.modulate = MedAlgo.contrastColor(background_color)
 	
 	$Law.print_law()
 	#Generate a bunch of laws...
+	for i in range(7):
+		var temp_law = Law.instance()
+		temp_law.position = $WallMapPrim.map_to_world(Vector2(38+i,10))
+		add_child(temp_law)
+		map_laws.append(temp_law)
+	
+	for law in map_laws:
+		law.print_law()
+		print("\n")
 	
 	#Create Jail Cells
 #	var jail_cell = JailCell.instance()
@@ -182,4 +193,3 @@ func changeBackground():
 	
 	
 	
-	print(background_color)
