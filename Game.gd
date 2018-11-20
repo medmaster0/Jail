@@ -59,20 +59,20 @@ func _ready():
 	var jail_x = 8 #The top left corner of the jail house
 	var jail_y = 8 #The top left corner of the jail house
 	var num_cols = 4 ##columns of cell x dir
-	var num_rows = 6 #Rows of cells y dir
+	var num_rows = 7 #Rows of cells y dir
 	
 	for i in range(num_cols): #columns of cell x dir
 	
 		for j in range(num_rows): #Rows of cells y dir
 			jail_cell = JailCell.instance()
-			jail_cell.position = $FloorMapPrim.map_to_world(Vector2(jail_x+4*i,jail_y+4*j ))
+			jail_cell.position = $FloorMapPrim.map_to_world(Vector2(jail_x+4*i,jail_y+3*j ))
 			add_child(jail_cell)
 			map_jail_cells.append(jail_cell)
 		
 			#Possibly add a Creature in there
 			if randi()%3 == 0:
 				var prisoner = Creature.instance()
-				prisoner.position = $FloorMapPrim.map_to_world(Vector2(jail_x+4*i+randi()%2,jail_y+4*j+1 ))
+				prisoner.position = $FloorMapPrim.map_to_world(Vector2(jail_x+4*i+randi()%2,jail_y+3*j+1 ))
 				$WallMapPrim.add_child(prisoner)
 				map_prisoners.append(prisoner)
 				prisoner.zodiac_tile.get_child(prisoner.zodiac_sign).visible = false
@@ -82,34 +82,36 @@ func _ready():
 		
 			#Draw the floor
 			for z in range(4):
-				$FloorMapPrim.set_cell(jail_x+4*i+z, jail_y+4*j+2, 0)
-				$FloorMapSeco.set_cell(jail_x+4*i+z, jail_y+4*j+2, 1)
+#				$FloorMapPrim.set_cell(jail_x+4*i+z, jail_y+4*j+2, 0)
+#				$FloorMapSeco.set_cell(jail_x+4*i+z, jail_y+4*j+2, 1)
+				$WallMapPrim.set_cell(jail_x+4*i+z, jail_y+3*j+2, 2)
+				$WallMapSeco.set_cell(jail_x+4*i+z, jail_y+3*j+2, 3)
 				
 			#Draw the left wall
 			for z in range(3):
-				$WallMapPrim.set_cell(jail_x+4*i-1, jail_y+4*j+z-1, 2 )
-				$WallMapSeco.set_cell(jail_x+4*i-1, jail_y+4*j+z-1, 3 )
+				$WallMapPrim.set_cell(jail_x+4*i-1, jail_y+3*j+z-1, 2 )
+				$WallMapSeco.set_cell(jail_x+4*i-1, jail_y+3*j+z-1, 3 )
 				
 			#Draw Top Wall
 			for z in range(4):
-				$WallMapPrim.set_cell(jail_x+4*i+z, jail_y+4*j-1, 2 )
-				$WallMapSeco.set_cell(jail_x+4*i+z, jail_y+4*j-1, 3 )
+				$WallMapPrim.set_cell(jail_x+4*i+z, jail_y+3*j-1, 2 )
+				$WallMapSeco.set_cell(jail_x+4*i+z, jail_y+3*j-1, 3 )
 				
 			#Also blocks on first column
 			#at end of path
 			if i == 0:
-				$WallMapPrim.set_cell(jail_x+4*i-1, jail_y+4*j+2, 2 )
-				$WallMapSeco.set_cell(jail_x+4*i-1, jail_y+4*j+2, 3 )
+				$WallMapPrim.set_cell(jail_x+4*i-1, jail_y+3*j+2, 2 )
+				$WallMapSeco.set_cell(jail_x+4*i-1, jail_y+3*j+2, 3 )
 				
 			#Also Blocks on last column
 			if i == num_cols-1:
 				#BRICKS Directly Above path
-				$WallMapPrim.set_cell(jail_x+4*i+3, jail_y+4*j+1, 2)
-				$WallMapSeco.set_cell(jail_x+4*i+3, jail_y+4*j+1, 3)
+				$WallMapPrim.set_cell(jail_x+4*i+3, jail_y+3*j+1, 2)
+				$WallMapSeco.set_cell(jail_x+4*i+3, jail_y+3*j+1, 3)
 				
 				#BRICKS two Above path
-				$WallMapPrim.set_cell(jail_x+4*i+3, jail_y+4*j, 2)
-				$WallMapSeco.set_cell(jail_x+4*i+3, jail_y+4*j, 3)
+				$WallMapPrim.set_cell(jail_x+4*i+3, jail_y+3*j, 2)
+				$WallMapSeco.set_cell(jail_x+4*i+3, jail_y+3*j, 3)
 
 
 #End READY
@@ -140,6 +142,8 @@ func _process(delta):
 	if background_timer > background_tick:
 		changeBackground()
 		background_timer = background_timer - background_tick
+		#now randomize back)ground tick for even more noize
+		background_tick = randf() + 1.5
 	
 	pass
 	
@@ -147,47 +151,53 @@ func _process(delta):
 #(within bounds)
 func changeBackground():
 	
-	#change RED
-	var r_change = 0
-	if randi()%2 == 0:
-		r_change = 0.025
-	else:
-		r_change = -0.025
-	#Adjust the background color
-	background_color.r = background_color.r + r_change
-	#bounds check (or else it can run away for ever pretty much)
-	if background_color.r > 1:
-		background_color.r = 1
-	if background_color.r < 0:
-		background_color.r = 0
-		
-	#change GREEN
-	var g_change = 0
-	if randi()%2 == 0:
-		g_change = 0.025
-	else:
-		g_change = -0.025
-	#Adjust the background color
-	background_color.g = background_color.g + g_change
-	#bounds check (or else it can run away for ever pretty much)
-	if background_color.g > 1:
-		background_color.g = 1
-	if background_color.g < 0:
-		background_color.g = 0
-		
-	#change BLUE
-	var b_change = 0
-	if randi()%2 == 0:
-		b_change = 0.025
-	else:
-		b_change = -0.025
-	#Adjust the background color
-	background_color.b = background_color.b + b_change
-	#bounds check (or else it can run away for ever pretty much)
-	if background_color.b > 1:
-		background_color.b = 1
-	if background_color.b < 0:
-		background_color.b = 0
+	#only change on rgb channel at a time (smoother)
+	var choice = randi()%3
+	match(choice):
+		0:
+			#change RED
+			var r_change = 0
+			if randi()%2 == 0:
+				r_change = 0.025
+			else:
+				r_change = -0.025
+			#Adjust the background color
+			background_color.r = background_color.r + r_change
+			#bounds check (or else it can run away for ever pretty much)
+			if background_color.r > 1:
+				background_color.r = 1
+			if background_color.r < 0:
+				background_color.r = 0
+			
+		1:
+			#change GREEN
+			var g_change = 0
+			if randi()%2 == 0:
+				g_change = 0.025
+			else:
+				g_change = -0.025
+			#Adjust the background color
+			background_color.g = background_color.g + g_change
+			#bounds check (or else it can run away for ever pretty much)
+			if background_color.g > 1:
+				background_color.g = 1
+			if background_color.g < 0:
+				background_color.g = 0
+			
+		2:
+			#change BLUE
+			var b_change = 0
+			if randi()%2 == 0:
+				b_change = 0.025
+			else:
+				b_change = -0.025
+			#Adjust the background color
+			background_color.b = background_color.b + b_change
+			#bounds check (or else it can run away for ever pretty much)
+			if background_color.b > 1:
+				background_color.b = 1
+			if background_color.b < 0:
+				background_color.b = 0
 	
 	$CanvasLayer/Background.modulate = background_color
 	
