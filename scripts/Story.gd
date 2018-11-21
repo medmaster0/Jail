@@ -25,3 +25,4 @@ func generateName():
 	temp_name = temp_name + temp_char	
 
 	print(temp_name)
+	

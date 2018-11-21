@@ -20,6 +20,10 @@ Laws="*res://scripts/Laws.gd"
 Story="*res://scripts/Story.gd"
 MedAlgo="*res://scripts/MedAlgo.gd"
 
+[gui]
+
+theme/custom_font="res://resources/receipt_font.tres"
+
 [importer_defaults]
 
 texture={

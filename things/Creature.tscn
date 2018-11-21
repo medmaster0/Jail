@@ -1,12 +1,13 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://things/Creature.gd" type="Script" id=1]
 [ext_resource path="res://things/ZodiacTile.tscn" type="PackedScene" id=2]
 [ext_resource path="res://tiles/crePrim.png" type="Texture" id=3]
 [ext_resource path="res://tiles/creSeco.png" type="Texture" id=4]
 [ext_resource path="res://things/Hat.tscn" type="PackedScene" id=5]
+[ext_resource path="res://things/Speech.tscn" type="PackedScene" id=6]
 
-[node name="Creature" type="Node2D" index="0"]
+[node name="Creature" type="Node2D"]
 
 script = ExtResource( 1 )
 Coin = null
@@ -28,5 +29,9 @@ _sections_unfolded = [ "Offset" ]
 
 position = Vector2( 0, -8 )
 _sections_unfolded = [ "Transform" ]
+
+[node name="Speech" parent="." index="3" instance=ExtResource( 6 )]
+
+visible = false
 
 

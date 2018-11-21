@@ -56,10 +56,10 @@ func _ready():
 #	add_child(jail_cell)
 	
 	var jail_cell #temp var for each jail cell
-	var jail_x = 8 #The top left corner of the jail house
-	var jail_y = 8 #The top left corner of the jail house
+	var jail_x = 1 #The top left corner of the jail house
+	var jail_y = 1 #The top left corner of the jail house
 	var num_cols = 4 ##columns of cell x dir
-	var num_rows = 7 #Rows of cells y dir
+	var num_rows = 13 #Rows of cells y dir
 	
 	for i in range(num_cols): #columns of cell x dir
 	
@@ -133,7 +133,11 @@ func _process(delta):
 			rand_prisoner.step(Vector2(1,0))
 		else:
 			rand_prisoner.step(Vector2(-1,0))
-		rand_prisoner.update()
+			
+#		#possibly toggle speech bubble
+#		if randi()%3 == 0:
+#			rand_prisoner.find_node("Speech").visible = !rand_prisoner.find_node("Speech").visible #toggle visiblity of speech bubble
+#		rand_prisoner.update()
 		
 		total_delta = total_delta - tick_period
 		
